@@ -6,7 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import { getFlash } from 'sveltekit-flash-message';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
 	const flashmessage = getFlash(page);
 
@@ -40,4 +40,5 @@
 	</div>
 {/if}
 
-<Toaster position="top-center" richColors closeButton />
+<!-- in demo mode the badge sits at the top centre, so toasts start below it -->
+<Toaster position="top-center" offset={data.demo ? 64 : 32} richColors closeButton />

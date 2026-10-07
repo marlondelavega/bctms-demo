@@ -27,7 +27,7 @@
 {#if !dismissed}
 	<!-- fixed, so it never changes the height the app layouts are built around -->
 	<div
-		class="pointer-events-none fixed inset-x-0 bottom-3 z-40 flex justify-center px-3 print:hidden"
+		class="pointer-events-none fixed inset-x-0 top-3 z-[2147483647] flex justify-center px-3 print:hidden"
 		role="status"
 	>
 		<div
