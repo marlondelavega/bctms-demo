@@ -1,0 +1,87 @@
+@import 'tailwindcss';
+
+/* class strategy: only elements that opt in with form-input / form-checkbox / ... get the
+   plugin's styles. Its default 'base' strategy restyles every input globally and fights
+   daisyUI — e.g. a check-mark background image inside every checked .toggle, a second
+   arrow on .select, a dot inside checked radio .btn — so daisyUI owns form controls. */
+@plugin '@tailwindcss/forms' {
+	strategy: 'class';
+}
+@plugin '@tailwindcss/typography';
+
+@plugin "daisyui" {
+	themes:
+		light --default,
+		dark --prefersdark;
+	exclude: rootscrollgutter;
+}
+
+@font-face {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 100 900; /* range, not a single value */
+	font-display: swap;
+	src: url('/fonts/InterVariable.woff2') format('woff2-variations');
+}
+
+:root {
+	font-family: Inter, system-ui, sans-serif;
+}
+
+.title-font {
+	font-family: Inter, system-ui, sans-serif;
+}
+
+.dropzone_dragover {
+	@apply border-primary bg-primary/5;
+}
+
+input:focus {
+	--tw-ring-color: transparent;
+}
+
+.divider-thin::after {
+	height: calc(0.07rem) !important;
+}
+
+/* ---- printed reports (src/lib/ui/components/print/ReportPrintout.svelte) ---- */
+@page report {
+	margin: 14mm 12mm 16mm;
+
+	/* margin boxes get a system face: the self-hosted Inter subset garbles glyphs down here */
+	@bottom-left {
+		content: 'CiteTicket - City Government of Dalisay';
+		font-family: 'Segoe UI', Arial, sans-serif;
+		font-size: 7pt;
+		color: #555;
+	}
+
+	@bottom-right {
+		content: 'Page ' counter(page) ' of ' counter(pages);
+		font-family: 'Segoe UI', Arial, sans-serif;
+		font-size: 7pt;
+		color: #555;
+	}
+}
+
+@media print {
+	/* named on the body, not the printout: anything else left in the flow (the toast region)
+	   would otherwise open a new, unnamed page and print a blank sheet */
+	body:has(.report-print) {
+		page: report;
+	}
+
+	/* the app shell is a fixed-height, scrolling column; on paper that clips the report to one page */
+	:is(html, body, .drawer, .drawer-content, .drawer-content *):has(.report-print) {
+		display: block !important;
+		height: auto !important;
+		min-height: 0 !important;
+		max-height: none !important;
+		overflow: visible !important;
+		background: white;
+	}
+
+	.drawer:has(.report-print) > :not(.drawer-content) {
+		display: none !important;
+	}
+}

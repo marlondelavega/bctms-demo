@@ -1,0 +1,22 @@
+{
+	"detector": {
+		"ignoreRules": [],
+		"ignoreFiles": [],
+		"ignoreValues": [
+			{
+				"rule": "broken-image",
+				"value": "*",
+				"files": ["src/routes/u/users/[id]/edit/+page.svelte"],
+				"createdAt": "2026-09-30T01:01:46.467Z",
+				"reason": "agent: pre-existing img src is filled by FileReader preview handler right after a file is chosen; not touched by this change"
+			}
+		]
+	},
+	"hook": {
+		"enabled": true,
+		"limits": {
+			"maxFindings": 5,
+			"maxChars": 8000
+		}
+	}
+}

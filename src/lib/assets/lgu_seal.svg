@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Seal of the City Government of Dalisay (fictional)">
+	<defs>
+		<path id="arc-top" d="M 16 60 A 44 44 0 0 1 104 60" />
+		<path id="arc-bottom" d="M 12 60 A 48 48 0 0 0 108 60" />
+	</defs>
+	<circle cx="60" cy="60" r="58" fill="#1e3a8a" />
+	<circle cx="60" cy="60" r="55" fill="none" stroke="#fbbf24" stroke-width="1.5" />
+	<circle cx="60" cy="60" r="33" fill="#f8fafc" />
+	<circle cx="60" cy="60" r="33" fill="none" stroke="#fbbf24" stroke-width="1.5" />
+	<path d="M24 78 Q60 56 96 78 L96 96 L24 96 Z" fill="#0ea5e9" opacity="0.0" />
+	<circle cx="60" cy="52" r="9" fill="#fbbf24" />
+	<path d="M34 76 L50 56 L62 70 L72 60 L86 76 Z" fill="#15803d" />
+	<path d="M34 76 L86 76 L86 82 L34 82 Z" fill="#0ea5e9" />
+	<text font-family="Arial, Helvetica, sans-serif" font-size="9.5" font-weight="700" fill="#f8fafc" letter-spacing="1.6">
+		<textPath href="#arc-top" startOffset="50%" text-anchor="middle">CITY OF DALISAY</textPath>
+	</text>
+	<text font-family="Arial, Helvetica, sans-serif" font-size="7" font-weight="700" fill="#fbbf24" letter-spacing="1.4" dy="-1">
+		<textPath href="#arc-bottom" startOffset="50%" text-anchor="middle">DEMO SEAL</textPath>
+	</text>
+</svg>

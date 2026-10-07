@@ -1,0 +1,30 @@
+# Render blueprint for the live demo. Create a new "Blueprint" from this repo, then fill the
+# values marked `sync: false` in the dashboard. The database lives on MongoDB Atlas (free tier).
+services:
+  - type: web
+    name: citeticket-demo
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: node build
+    healthCheckPath: /citeticket/login
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      # needed at build time too ($env/static/private is baked into the build)
+      - key: MONGO_URL
+        sync: false # mongodb+srv://...mongodb.net/citeticket_demo (the database name must contain "demo")
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DEMO_MODE
+        value: 'true'
+      - key: DEMO_RESET_TOKEN
+        generateValue: true
+      # adapter-node: the public URL, required so form posts pass SvelteKit's origin check
+      - key: ORIGIN
+        sync: false # e.g. https://citeticket-demo.onrender.com
+      # behind Render's proxy, read the visitor's address (used by the login rate limiter)
+      - key: ADDRESS_HEADER
+        value: X-Forwarded-For
+      - key: XFF_DEPTH
+        value: 1

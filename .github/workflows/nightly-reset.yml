@@ -1,0 +1,33 @@
+name: Nightly demo reset
+
+# Wipes and re-seeds the live demo at 03:00 Manila time (19:00 UTC) so the data and dates stay fresh.
+# Needs a repository variable DEMO_URL (e.g. https://citeticket-demo.onrender.com/citeticket)
+# and a repository secret DEMO_RESET_TOKEN (the same value the app has).
+on:
+  schedule:
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the reset
+        env:
+          DEMO_URL: ${{ vars.DEMO_URL }}
+          DEMO_RESET_TOKEN: ${{ secrets.DEMO_RESET_TOKEN }}
+        run: |
+          # a free host may be asleep, so allow for a slow first response
+          curl --fail --silent --show-error --retry 6 --retry-delay 20 --retry-all-errors \
+            --max-time 90 -X POST -H "Authorization: Bearer $DEMO_RESET_TOKEN" \
+            "$DEMO_URL/api/demo/reset"
+      - name: Wait, then check it finished
+        env:
+          DEMO_URL: ${{ vars.DEMO_URL }}
+          DEMO_RESET_TOKEN: ${{ secrets.DEMO_RESET_TOKEN }}
+        run: |
+          sleep 60
+          curl --fail --silent --show-error -H "Authorization: Bearer $DEMO_RESET_TOKEN" \
+            "$DEMO_URL/api/demo/reset" | tee status.json
+          grep -q '"running":false' status.json
+          ! grep -q '"error"' status.json
